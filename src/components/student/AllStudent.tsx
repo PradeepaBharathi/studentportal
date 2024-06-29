@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-
 interface Student {
   _id: string;
   name: string;
@@ -20,21 +19,16 @@ interface Student {
 const AllStudent = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState<Student[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
-
+  const [studentToDelete, setStudentToDelete] = useState<Student | null>(null); 
   const handleEdit = (id: string) => {
     navigate(`/edit/${id}`);
   };
-
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get<Student[]>('https://studentbackend-2vhx.onrender.com/students/all-student');
-        setStudents(response.data);
-        setFilteredStudents(response.data); // Initialize filtered students
+        const response = await axios.get<Student[]>('https://studentbackend-2vhx.onrender.com/students/all-student'); 
+                setStudents(response.data);
         toast.success('Students fetched successfully');
       } catch (error) {
         console.error('Error fetching students:', error);
@@ -44,19 +38,16 @@ const AllStudent = () => {
 
     fetchStudents();
   }, []);
-
   const handleDelete = async (student: Student) => {
     try {
       await axios.delete(`https://studentbackend-2vhx.onrender.com/students/delete-student/${student._id}`);
       setStudents(students.filter(s => s._id !== student._id)); // Update state after deletion
-      setFilteredStudents(filteredStudents.filter(s => s._id !== student._id)); // Update filtered list
       toast.success('Student deleted successfully');
     } catch (error) {
       console.error('Error deleting student:', error);
       toast.error('Failed to delete student');
     }
-    setDeleteDialogOpen(false);
-  };
+    setDeleteDialogOpen(false);  };
 
   const openDeleteDialog = (student: Student) => {
     setStudentToDelete(student);
@@ -68,35 +59,13 @@ const AllStudent = () => {
     setStudentToDelete(null);
   };
 
-  const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-
-    if (query) {
-      try {
-        const response = await axios.get<Student[]>(`https://studentbackend-2vhx.onrender.com/students/student-name/${query}`);
-        setFilteredStudents(response.data);
-      } catch (error) {
-        console.error('Error fetching student by name:', error);
-        setFilteredStudents([]);
-      }
-    } else {
-      setFilteredStudents(students);
-    }
-  };
 
   return (
     <div>
       <div className='tool'>
         <h1>Students</h1>
         <div className='tool-right'>
-          <input
-            type='text'
-            placeholder='Search....'
-            className='searchbox'
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
+          <input type='text' placeholder='Search....' className='searchbox' />
           <button className='add' onClick={() => navigate('/add')}>
             Add-Student
           </button>
@@ -117,7 +86,7 @@ const AllStudent = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredStudents.map((student) => (
+            {students.map((student) => (
               <tr key={student._id}>
                 <td>{student.name}</td>
                 <td>{student.email}</td>
@@ -128,7 +97,7 @@ const AllStudent = () => {
                   <EditIcon onClick={() => handleEdit(student._id)} />
                 </td>
                 <td>
-                  <DeleteIcon onClick={() => openDeleteDialog(student)} />
+                <DeleteIcon onClick={() => openDeleteDialog(student)} />
                 </td>
               </tr>
             ))}
@@ -148,13 +117,13 @@ const AllStudent = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions style={{ width: '100%', justifyContent: 'space-around' }}>
-          <Button onClick={() => handleDelete(studentToDelete as Student)} autoFocus style={{ backgroundColor: '#22C55E', color: 'white', width: '45%' }}>
-            Yes
-          </Button>
-          <Button onClick={closeDeleteDialog} style={{ backgroundColor: '#8B4513', color: 'white', width: '45%' }}>
-            No
-          </Button>
-        </DialogActions>
+  <Button onClick={() => handleDelete(studentToDelete as Student)} autoFocus style={{ backgroundColor: '#22C55E', color: 'white', width: '45%' }}>
+    Yes
+  </Button>
+  <Button onClick={closeDeleteDialog} style={{ backgroundColor: '#8B4513', color: 'white', width: '45%' }}>
+    No
+  </Button>
+</DialogActions>
       </Dialog>
     </div>
   );
