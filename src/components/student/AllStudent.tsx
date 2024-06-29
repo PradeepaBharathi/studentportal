@@ -32,7 +32,7 @@ const AllStudent = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get<Student[]>('http://localhost:5000/students/all-student');
+        const response = await axios.get<Student[]>('https://studentbackend-2vhx.onrender.com/students/all-student');
         setStudents(response.data);
         setFilteredStudents(response.data); // Initialize filtered students
         toast.success('Students fetched successfully');
@@ -47,7 +47,7 @@ const AllStudent = () => {
 
   const handleDelete = async (student: Student) => {
     try {
-      await axios.delete(`http://localhost:5000/students/delete-student/${student._id}`);
+      await axios.delete(`https://studentbackend-2vhx.onrender.com/students/delete-student/${student._id}`);
       setStudents(students.filter(s => s._id !== student._id)); // Update state after deletion
       setFilteredStudents(filteredStudents.filter(s => s._id !== student._id)); // Update filtered list
       toast.success('Student deleted successfully');
@@ -74,7 +74,7 @@ const AllStudent = () => {
 
     if (query) {
       try {
-        const response = await axios.get<Student[]>(`http://localhost:5000/students/student-name/${query}`);
+        const response = await axios.get<Student[]>(`https://studentbackend-2vhx.onrender.com/students/student-name/${query}`);
         setFilteredStudents(response.data);
       } catch (error) {
         console.error('Error fetching student by name:', error);

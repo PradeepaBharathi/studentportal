@@ -29,7 +29,7 @@ const EditStudent = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await axios.get<Student>(`http://localhost:5000/students/student/${id}`);
+        const response = await axios.get<Student>(`https://studentbackend-2vhx.onrender.com/students/student/${id}`);
         setStudent(response.data);
       
       } catch (error) {

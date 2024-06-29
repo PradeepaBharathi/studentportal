@@ -25,7 +25,7 @@ const AddStudent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/students/create-student', formData);
+      const response = await axios.post('https://studentbackend-2vhx.onrender.com/students/create-student', formData);
       console.log(response.data); 
 
       toast.success('Student added successfully!', {
