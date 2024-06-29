@@ -1,0 +1,43 @@
+.tool{
+display: flex;
+justify-content: space-around;
+}
+.tool-right{
+    display: flex;
+    gap:2rem;
+    align-items: center;
+}
+.searchbox{
+    height: 30px;
+    width: 270px;
+}
+
+.add{
+    background-color: #22C55E;
+    color: white;
+    border:1px solid transparent;
+    border-radius: 10px;
+    height: 30px;
+    width: 100px;
+    font-weight: bold;
+}
+.std-list {
+    margin-top: 20px;
+    margin-left: 16rem;
+  }
+  
+  table {
+
+    width: 80%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
